@@ -5,14 +5,16 @@ import os
 from dotenv import load_dotenv
 from google import genai
 
+from src.runtime import get_secret
+
 
 load_dotenv()
 
 
 def llm_available() -> tuple[bool, str]:
-    api_key = os.getenv("GOOGLE_API_KEY")
+    api_key = get_secret("GOOGLE_API_KEY")
     if not api_key:
-        return False, "La variable GOOGLE_API_KEY est absente du fichier .env."
+        return False, "La variable GOOGLE_API_KEY est absente des secrets Streamlit et du fichier .env."
     return True, ""
 
 
@@ -70,7 +72,7 @@ Ne jamais inventer de donnees absentes.
 
 
 def generate_text(prompt: str) -> str:
-    client = genai.Client(api_key=os.getenv("GOOGLE_API_KEY"))
-    model_name = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
+    client = genai.Client(api_key=get_secret("GOOGLE_API_KEY"))
+    model_name = get_secret("GEMINI_MODEL", "gemini-2.5-flash")
     response = client.models.generate_content(model=model_name, contents=prompt)
     return response.text

@@ -1,5 +1,9 @@
 from __future__ import annotations
 
+from src.runtime import configure_matplotlib_cache
+
+configure_matplotlib_cache()
+
 import matplotlib.pyplot as plt
 import pandas as pd
 
