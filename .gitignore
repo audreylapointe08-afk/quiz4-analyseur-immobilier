@@ -1,0 +1,5 @@
+.env
+.venv/
+.venv_debug/
+__pycache__/
+.tmp/
